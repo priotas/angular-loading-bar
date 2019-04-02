@@ -308,7 +308,9 @@ angular.module('cfp.loadingBar', [])
         completeTimeout = $timeout(function() {
           var promise = $animate.leave(loadingBarContainer, _completeAnimation);
           if (promise && promise.then) {
-            promise.then(_completeAnimation);
+            promise.then(_completeAnimation).catch(function(err) {
+              throw err;
+            });
           }
           $animate.leave(spinner);
           $rootScope.$broadcast('cfpLoadingBar:completed');

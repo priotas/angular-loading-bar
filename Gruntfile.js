@@ -36,33 +36,12 @@ module.exports = function(grunt) {
 
     karma: {
       unit: {
-        configFile: 'test/karma-angular-1.2.conf.js',
-        singleRun: true,
-        coverageReporter: {
-          type: 'text',
-          dir: 'coverage/'
-        }
-      },
-      unit13: {
-        configFile: 'test/karma-angular-1.3.conf.js',
-        singleRun: true,
-        coverageReporter: {
-          type: 'text',
-          dir: 'coverage/'
-        }
-      },
-      unit14: {
-        configFile: 'test/karma-angular-1.4.conf.js',
-        singleRun: true,
-        coverageReporter: {
-          type: 'text',
-          dir: 'coverage/'
-        }
+        configFile: 'test/karma-angular-1.7.conf.js',
+        singleRun: true
       },
       watch: {
-        configFile: 'test/karma-angular-1.2.conf.js',
-        singleRun: false,
-        reporters: ['progress']  // Don't display coverage
+        configFile: 'test/karma-angular-1.7.conf.js',
+        singleRun: false
       }
     },
 
@@ -95,8 +74,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-karma');
 
-  grunt.registerTask('default', ['jshint', 'karma:unit', 'karma:unit13', 'karma:unit14', 'uglify', 'cssmin', 'concat:build']);
-  grunt.registerTask('test', ['karma:watch']);
+  grunt.registerTask('default', ['jshint', 'karma:unit', 'uglify', 'cssmin', 'concat:build']);
+  grunt.registerTask('test', ['karma:unit']);
+  grunt.registerTask('watch', ['karma:watch']);
   grunt.registerTask('build', ['default']);
 
 };

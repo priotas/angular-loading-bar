@@ -14,11 +14,11 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      '../bower_components/angular-1.3/angular.js',
-      '../bower_components/angular-animate-1.3/angular-animate.js',
-      '../bower_components/angular-mocks-1.3/angular-mocks.js',
+      '../node_modules/angular/angular.js',
+      '../node_modules/angular-animate/angular-animate.js',
+      '../node_modules/angular-mocks/angular-mocks.js',
       '../src/*.js',
-      '*.coffee'
+      '*.js'
     ],
 
 
@@ -30,7 +30,7 @@ module.exports = function(config) {
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['progress', 'coverage'],
+    reporters: ['progress'],
 
 
     // web server port
@@ -60,15 +60,7 @@ module.exports = function(config) {
     // - IE (only Windows)
     browsers: ['PhantomJS'],
 
-    coverageReporter: {
-      type : 'html',
-      dir : 'coverage/',
-    },
-
-    preprocessors: {
-      '../src/*.js': ['coverage'],
-      '*.coffee': 'coffee'
-    },
+    preprocessors: {},
 
 
     // If browser does not capture in given timeout [ms], kill it
