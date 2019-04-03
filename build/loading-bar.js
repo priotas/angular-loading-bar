@@ -1,7 +1,7 @@
 /*! 
- * angular-loading-bar v0.9.0
- * https://chieffancypants.github.io/angular-loading-bar
- * Copyright (c) 2016 Wes Cruver
+ * @priotas/angular-loading-bar v0.10.0
+ * https://priotas.github.io/angular-loading-bar
+ * Copyright (c) 2019 Wes Cruver
  * License: MIT
  */
 /*
@@ -314,7 +314,9 @@ angular.module('cfp.loadingBar', [])
         completeTimeout = $timeout(function() {
           var promise = $animate.leave(loadingBarContainer, _completeAnimation);
           if (promise && promise.then) {
-            promise.then(_completeAnimation);
+            promise.then(_completeAnimation).catch(function(err) {
+              throw err;
+            });
           }
           $animate.leave(spinner);
           $rootScope.$broadcast('cfpLoadingBar:completed');

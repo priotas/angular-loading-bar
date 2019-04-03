@@ -1,6 +1,6 @@
 {
-  "name": "angular-loading-bar",
-  "version": "0.9.0",
+  "name": "@priotas/angular-loading-bar",
+  "version": "0.10.0",
   "description": "An automatic loading bar for AngularJS",
   "main": "index.js",
   "files": [
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/chieffancypants/angular-loading-bar.git"
+    "url": "git://github.com/priotas/angular-loading-bar.git"
   },
   "scripts": {
     "grunt": "grunt",
@@ -33,12 +33,12 @@
   "author": "Wes Cruver",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chieffancypants/angular-loading-bar/issues"
+    "url": "https://github.com/priotas/angular-loading-bar/issues"
   },
-  "homepage": "https://chieffancypants.github.io/angular-loading-bar",
+  "homepage": "https://priotas.github.io/angular-loading-bar",
   "devDependencies": {
-    "angular-animate": "^1.7.8",
-    "angular-mocks": "^1.7.8",
+    "angular-animate": "^1.7",
+    "angular-mocks": "^1.7",
     "grunt": "^1.0.4",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-cssmin": "^3.0.0",
@@ -51,6 +51,6 @@
     "karma-phantomjs-launcher": "^1.0.4"
   },
   "dependencies": {
-    "angular": "^1.7.8"
+    "angular": "^1.7"
   }
 }
