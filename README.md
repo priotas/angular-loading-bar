@@ -1,4 +1,7 @@
-angular-loading-bar
+[![Build Status](https://travis-ci.com/priotas/angular-loading-bar.svg?branch=priotas)](https://travis-ci.com/priotas/angular-loading-bar)
+
+
+@priotas/angular-loading-bar
 ===================
 
 The idea is simple: Add a loading bar / progress bar whenever an XHR request goes out in angular.  Multiple requests within the same time period get bundled together such that each response increments the progress bar by the appropriate amount.
@@ -27,19 +30,9 @@ This is mostly cool because you simply include it in your app, and it works.  Th
 
 3. That's it -- you're done!
 
-#### via bower:
-```
-$ bower install angular-loading-bar
-```
 #### via npm:
 ```
 $ npm install angular-loading-bar
-```
-
-#### via CDN:
-```html
- <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.css' type='text/css' media='all' />
- <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js'></script>
 ```
 
 ## Why I created this
