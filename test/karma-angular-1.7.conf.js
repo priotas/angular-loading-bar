@@ -17,10 +17,9 @@ module.exports = function(config) {
       '../node_modules/angular/angular.js',
       '../node_modules/angular-animate/angular-animate.js',
       '../node_modules/angular-mocks/angular-mocks.js',
-      '../src/*.js',
+      '../dist/angular-loading-bar-umd.js',
       '*.js'
     ],
-
 
     // list of files to exclude
     exclude: [
@@ -59,9 +58,6 @@ module.exports = function(config) {
     // - PhantomJS
     // - IE (only Windows)
     browsers: ['PhantomJS'],
-
-    preprocessors: {},
-
 
     // If browser does not capture in given timeout [ms], kill it
     captureTimeout: 60000,

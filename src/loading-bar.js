@@ -1,3 +1,5 @@
+import fetchIntercept from 'fetch-intercept';
+
 /*
  * angular-loading-bar
  *
@@ -7,7 +9,6 @@
  * (c) 2013 Wes Cruver
  * License: MIT
  */
-
 (function() {
   'use strict';
 
@@ -23,7 +24,7 @@
   angular.module('cfp.loadingBarInterceptor', ['cfp.loadingBar']).config([
     '$httpProvider',
     function($httpProvider) {
-      var interceptor = [
+      const interceptor = [
         '$q',
         '$cacheFactory',
         '$timeout',
@@ -127,7 +128,9 @@
             reqsCompleted++;
             if (reqsCompleted >= reqsTotal) {
               $rootScope.$broadcast('cfpLoadingBar:loaded', {
-                url: angular.isDefined(rejection.config) ? rejection.config.url : '',
+                url: angular.isDefined(rejection.config)
+                  ? rejection.config.url
+                  : '',
                 result: rejection
               });
               setComplete();
@@ -136,26 +139,25 @@
             }
           };
 
-          if(window.fetchIntercept) {
-            window.fetchIntercept.register({
-              request: function(url, config) {
-                requestIntercept(url);
-                return [url, config];
-              },
-  
-              response: function(response) {
-                responseIntercept(response);
-                // Modify the reponse object
-                return response;
-              },
-  
-              responseError: function(error) {
-                // Handle an fetch error
-                responseErrorIntercept(error);responseErrorIntercept
-                return Promise.reject(error);
-              }
-            });
-          }
+          fetchIntercept.register({
+            request: function(url, config) {
+              requestIntercept(url);
+              return [url, config];
+            },
+
+            response: function(response) {
+              responseIntercept(response);
+              // Modify the reponse object
+              return response;
+            },
+
+            responseError: function(error) {
+              // Handle an fetch error
+              responseErrorIntercept(error);
+              responseErrorIntercept;
+              return Promise.reject(error);
+            }
+          });
 
           return {
             request: function(config) {

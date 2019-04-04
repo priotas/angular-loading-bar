@@ -3,9 +3,6 @@ import angularAnimate from 'angular-animate';
 import '../src/loading-bar';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../src/loading-bar.css';
-import fetchIntercept from 'fetch-intercept';
-
-window.fetchIntercept = fetchIntercept;
 
 angular
   .module('LoadingBarExample', ['chieffancypants.loadingBar', angularAnimate])
