@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('fetch-intercept')) :
   typeof define === 'function' && define.amd ? define(['fetch-intercept'], factory) :
-  (global = global || self, factory(global['fetch-intercept']));
+  (global = global || self, factory(global.fetchIntercept));
 }(this, function (fetchIntercept) { 'use strict';
 
   fetchIntercept = fetchIntercept && fetchIntercept.hasOwnProperty('default') ? fetchIntercept['default'] : fetchIntercept;
@@ -27,7 +27,7 @@
      */
 
     angular.module('cfp.loadingBarInterceptor', ['cfp.loadingBar']).config(['$httpProvider', function ($httpProvider) {
-      const interceptor = ['$q', '$cacheFactory', '$timeout', '$rootScope', '$log', 'cfpLoadingBar', function ($q, $cacheFactory, $timeout, $rootScope, $log, cfpLoadingBar) {
+      var interceptor = ['$q', '$cacheFactory', '$timeout', '$rootScope', '$log', 'cfpLoadingBar', function ($q, $cacheFactory, $timeout, $rootScope, $log, cfpLoadingBar) {
         /**
          * The total number of requests made
          */
@@ -84,7 +84,7 @@
           return cached;
         }
 
-        var requestIntercept = function (url) {
+        var requestIntercept = function requestIntercept(url) {
           $rootScope.$broadcast('cfpLoadingBar:loading', {
             url: url
           });
@@ -99,7 +99,7 @@
           cfpLoadingBar.set(reqsCompleted / reqsTotal);
         };
 
-        var responseIntercept = function (response) {
+        var responseIntercept = function responseIntercept(response) {
           reqsCompleted++;
 
           if (reqsCompleted >= reqsTotal) {
@@ -113,7 +113,7 @@
           }
         };
 
-        var responseErrorIntercept = function (rejection) {
+        var responseErrorIntercept = function responseErrorIntercept(rejection) {
           reqsCompleted++;
 
           if (reqsCompleted >= reqsTotal) {
@@ -128,23 +128,23 @@
         };
 
         fetchIntercept.register({
-          request: function (url, config) {
+          request: function request(url, config) {
             requestIntercept(url);
             return [url, config];
           },
-          response: function (response) {
-            responseIntercept(response); // Modify the reponse object
+          response: function response(_response) {
+            responseIntercept(_response); // Modify the reponse object
 
-            return response;
+            return _response;
           },
-          responseError: function (error) {
+          responseError: function responseError(error) {
             // Handle an fetch error
             responseErrorIntercept(error);
             return Promise.reject(error);
           }
         });
         return {
-          request: function (config) {
+          request: function request(config) {
             // Check to make sure this request hasn't already been cached and that
             // the requester didn't explicitly ask us to ignore this request:
             if (!config.ignoreLoadingBar && !isCached(config)) {
@@ -153,19 +153,19 @@
 
             return config;
           },
-          response: function (response) {
-            if (!response || !response.config) {
+          response: function response(_response2) {
+            if (!_response2 || !_response2.config) {
               $log.error('Broken interceptor detected: Config object not supplied in response:\n https://github.com/chieffancypants/angular-loading-bar/pull/50');
-              return response;
+              return _response2;
             }
 
-            if (!response.config.ignoreLoadingBar && !isCached(response.config)) {
-              responseIntercept(response);
+            if (!_response2.config.ignoreLoadingBar && !isCached(_response2.config)) {
+              responseIntercept(_response2);
             }
 
-            return response;
+            return _response2;
           },
-          responseError: function (rejection) {
+          responseError: function responseError(rejection) {
             if (!rejection || !rejection.config) {
               $log.error('Broken interceptor detected: Config object not supplied in rejection:\n https://github.com/chieffancypants/angular-loading-bar/pull/50');
               return $q.reject(rejection);

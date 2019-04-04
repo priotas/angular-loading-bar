@@ -60,11 +60,11 @@
     "karma-babel-preprocessor": "^8.0.0-beta.0",
     "karma-jasmine": "^2.0.1",
     "karma-phantomjs-launcher": "^1.0.4",
+    "karma-rollup-preprocessor": "^7.0.0",
     "popper.js": "^1.14.7",
     "rollup": "^1.8.0",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^9.3.3",
-    "rollup-plugin-node-resolve": "^4.0.1",
     "style-loader": "^0.23.1",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
@@ -74,6 +74,7 @@
     "angular": "^1.7",
     "fetch-intercept": "^2.3.1",
     "remove": "^0.1.5",
+    "rollup-plugin-node-resolve": "^4.0.1",
     "whatwg-fetch": "^3.0.0"
   }
 }
