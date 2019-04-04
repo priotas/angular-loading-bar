@@ -3,6 +3,9 @@ import angularAnimate from 'angular-animate';
 import '../src/loading-bar';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../src/loading-bar.css';
+import fetchIntercept from 'fetch-intercept';
+
+window.fetchIntercept = fetchIntercept;
 
 angular
   .module('LoadingBarExample', ['chieffancypants.loadingBar', angularAnimate])
@@ -10,42 +13,57 @@ angular
     cfpLoadingBarProvider.includeSpinner = true;
   })
 
-  .controller('ExampleCtrl', function($scope, $http, $timeout, cfpLoadingBar) {
-    $scope.posts = [];
+  .controller('ExampleCtrl', function(
+    $scope,
+    $http,
+    $timeout,
+    cfpLoadingBar,
+    $sce,
+    $q
+  ) {
+    $scope.ipsums = [];
     $scope.section = null;
-    $scope.subreddit = null;
-    $scope.subreddits = [
-      'cats',
-      'pics',
-      'funny',
-      'gaming',
-      'AdviceAnimals',
-      'aww'
-    ];
 
-    var getRandomSubreddit = function() {
-      var sub =
-        $scope.subreddits[Math.floor(Math.random() * $scope.subreddits.length)];
-
-      // ensure we get a new subreddit each time.
-      if (sub == $scope.subreddit) {
-        return getRandomSubreddit();
-      }
-
-      return sub;
+    var trustSrc = function(src) {
+      return $sce.trustAsResourceUrl(src);
     };
 
-    $scope.fetch = function() {
-      $scope.subreddit = getRandomSubreddit();
+    var apiUrl = 'https://api.github.com/organizations?per_page=50';
+
+    $scope.xhr = function() {
       $http
-        .jsonp(
-          'http://www.reddit.com/r/' +
-            $scope.subreddit +
-            '.json?limit=50&jsonp=JSON_CALLBACK'
-        )
-        .success(function(data) {
-          $scope.posts = data.data.children;
+        .jsonp(trustSrc(apiUrl), { jsonpCallbackParam: 'callback' })
+        .then(function(resp) {
+          $scope.ipsums = resp.data.data;
+        })
+        .catch(function(err) {
+          throw err;
         });
+    };
+
+    var promiseWrap = function(promise) {
+      return $q((resolve, reject) => {
+        promise.then(resolve).catch(reject);
+      });
+    }
+
+    var fetchWrap = function() {
+      return fetch(trustSrc(apiUrl))
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(json) {
+          return json;
+        })
+        .catch(function(err) {
+          throw err;
+        });
+    }
+
+    $scope.fetch = function() {
+      promiseWrap(fetchWrap()).then(function(data) {
+        $scope.ipsums = data;
+      });
     };
 
     $scope.start = function() {
