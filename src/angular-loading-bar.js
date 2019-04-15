@@ -8,6 +8,9 @@
  * License: MIT
  */
 
+import angular from 'angular';
+import fetchIntercept from 'fetch-intercept';
+
 (function() {
   'use strict';
 
@@ -23,7 +26,7 @@
   angular.module('cfp.loadingBarInterceptor', ['cfp.loadingBar']).config([
     '$httpProvider',
     function($httpProvider) {
-      var interceptor = [
+      const interceptor = [
         '$q',
         '$cacheFactory',
         '$timeout',
@@ -68,9 +71,9 @@
            * @return {Boolean} retrns true if cached, otherwise false
            */
           function isCached(config) {
-            var cache;
-            var defaultCache = $cacheFactory.get('$http');
-            var defaults = $httpProvider.defaults;
+            let cache;
+            const defaultCache = $cacheFactory.get('$http');
+            const defaults = $httpProvider.defaults;
 
             // Choose the proper cache source. Borrowed from angular: $http service
             if (
@@ -85,7 +88,7 @@
                 : defaultCache;
             }
 
-            var cached =
+            const cached =
               cache !== undefined ? cache.get(config.url) !== undefined : false;
 
             if (config.cached !== undefined && cached !== config.cached) {
@@ -95,7 +98,7 @@
             return cached;
           }
 
-          var requestIntercept = function(url) {
+          const requestIntercept = function(url) {
             $rootScope.$broadcast('cfpLoadingBar:loading', {
               url: url
             });
@@ -108,7 +111,7 @@
             cfpLoadingBar.set(reqsCompleted / reqsTotal);
           };
 
-          var responseIntercept = function(response) {
+          const responseIntercept = function(response) {
             reqsCompleted++;
             if (reqsCompleted >= reqsTotal) {
               $rootScope.$broadcast('cfpLoadingBar:loaded', {
@@ -123,7 +126,7 @@
             }
           };
 
-          var responseErrorIntercept = function(rejection) {
+          const responseErrorIntercept = function(rejection) {
             reqsCompleted++;
             if (reqsCompleted >= reqsTotal) {
               $rootScope.$broadcast('cfpLoadingBar:loaded', {
@@ -136,26 +139,24 @@
             }
           };
 
-          if(window.fetchIntercept) {
-            window.fetchIntercept.register({
-              request: function(url, config) {
-                requestIntercept(url);
-                return [url, config];
-              },
-  
-              response: function(response) {
-                responseIntercept(response);
-                // Modify the reponse object
-                return response;
-              },
-  
-              responseError: function(error) {
-                // Handle an fetch error
-                responseErrorIntercept(error);responseErrorIntercept
-                return Promise.reject(error);
-              }
-            });
-          }
+
+          fetchIntercept.register({
+            request: function(url, config) {
+              requestIntercept(url);
+              return [url, config];
+            },
+
+            response: function(response) {
+              responseIntercept(response);
+              return response;
+            },
+
+            responseError: function(error) {
+              responseErrorIntercept(error);
+              return Promise.reject(error);
+            }
+          });
+          
 
           return {
             request: function(config) {

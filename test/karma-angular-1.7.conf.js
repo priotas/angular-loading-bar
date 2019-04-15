@@ -1,5 +1,5 @@
-// Karma configuration
-// Generated on Sun Sep 15 2013 20:18:09 GMT-0400 (EDT)
+const pkg = require('../package.json');
+const path = require('path');
 
 module.exports = function(config) {
   config.set({
@@ -17,7 +17,7 @@ module.exports = function(config) {
       '../node_modules/angular/angular.js',
       '../node_modules/angular-animate/angular-animate.js',
       '../node_modules/angular-mocks/angular-mocks.js',
-      '../src/*.js',
+      path.join('../', pkg.browser),
       '*.js'
     ],
 

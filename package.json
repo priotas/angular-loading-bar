@@ -1,24 +1,18 @@
 {
   "name": "@priotas/angular-loading-bar",
-  "version": "0.20.0",
+  "version": "0.30.0",
   "description": "An automatic loading bar for AngularJS",
-  "main": "index.js",
-  "files": [
-    "build/loading-bar.js",
-    "build/loading-bar.css"
-  ],
-  "style": "build/loading-bar.css",
-  "directories": {
-    "example": "example",
-    "test": "test"
-  },
+  "main": "dist/angular-loading-bar.cjs.js",
+  "module": "dist/angular-loading-bar.esm.js",
+  "browser": "dist/angular-loading-bar.umd.js",
+  "style": "dist/css/angular-loading-bar.css",
   "repository": {
     "type": "git",
     "url": "git://github.com/priotas/angular-loading-bar.git"
   },
   "scripts": {
     "grunt": "grunt",
-    "build": "grunt build",
+    "build": "rollup -c",
     "test": "grunt test",
     "watch": "grunt watch",
     "example": "webpack --mode development --config example/webpack.config.js",
@@ -39,9 +33,13 @@
   },
   "homepage": "https://priotas.github.io/angular-loading-bar",
   "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
     "angular-animate": "^1.7",
     "angular-mocks": "^1.7",
+    "babel-plugin-angularjs-annotate": "^0.10.0",
     "bootstrap": "^4.3.1",
+    "browserlist": "^1.0.1",
     "css-loader": "^2.1.1",
     "grunt": "^1.0.4",
     "grunt-contrib-concat": "^1.0.1",
@@ -56,6 +54,9 @@
     "karma-jasmine": "^2.0.1",
     "karma-phantomjs-launcher": "^1.0.4",
     "popper.js": "^1.14.7",
+    "rollup": "^1.10.0",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-commonjs": "^9.3.4",
     "style-loader": "^0.23.1",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
