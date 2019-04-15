@@ -1,6 +1,6 @@
 {
   "name": "@priotas/angular-loading-bar",
-  "version": "0.30.0",
+  "version": "0.31.0",
   "description": "An automatic loading bar for AngularJS",
   "main": "dist/angular-loading-bar.cjs.js",
   "module": "dist/angular-loading-bar.esm.js",

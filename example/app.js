@@ -1,14 +1,11 @@
 import angular from 'angular';
 import angularAnimate from 'angular-animate';
-import '../src/loading-bar';
+import angularLoadingBar from '../';
 import 'bootstrap/dist/css/bootstrap.css';
-import '../src/loading-bar.css';
-import fetchIntercept from 'fetch-intercept';
-
-window.fetchIntercept = fetchIntercept;
+import '../src/angular-loading-bar.css';
 
 angular
-  .module('LoadingBarExample', ['chieffancypants.loadingBar', angularAnimate])
+  .module('LoadingBarExample', [angularLoadingBar, angularAnimate])
   .config(function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = true;
   })
